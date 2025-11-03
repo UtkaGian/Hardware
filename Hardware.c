@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-void write_File(const char *path, const char *value){
+static void write_File(const char *path, const char *value){
     FILE *fp = fopen(path, "w");
     if (fp == NULL) {
         perror("Error al abrir archivo");
@@ -13,7 +13,7 @@ void write_File(const char *path, const char *value){
     fclose(fp);
 }
 
-char read_File(const char *path){
+static char read_File(const char *path){
     FILE *fp = fopen(path, "r");
     if (fp == NULL) {
         perror("Error al leer archivo");
@@ -25,7 +25,7 @@ char read_File(const char *path){
     return value;
 }
 
-void export_pin(const char *pin){
+static void export_pin(const char *pin){
     write_File("/sys/class/gpio/export", pin);
 }
 
@@ -33,7 +33,7 @@ void release_pin(const char *pin){
     write_File("/sys/class/gpio/unexport", pin);
 }
 
-void set_pin(const char *pin, const char *dir){
+static void set_pin(const char *pin, const char *dir){
     char path[50]="/sys/class/gpio/gpio";
     strcat(path, pin);
     strcat(path, "/direction");
